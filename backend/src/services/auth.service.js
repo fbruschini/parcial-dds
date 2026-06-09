@@ -3,10 +3,8 @@ const jwt = require("jsonwebtoken");
 const { randomUUID } = require("crypto");
 const { readData, writeData } = require("../data/database");
 const { ROLES } = require("../config/constants");
+const { getJwtSecret, getJwtExpiresIn } = require("../config/auth");
 const AppError = require("../utils/AppError");
-
-const JWT_SECRET = process.env.JWT_SECRET || "dds-secret-desarrollo";
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "8h";
 
 function publicUser(user) {
   const { passwordHash, ...safeUser } = user;
@@ -21,8 +19,8 @@ function signToken(user) {
       email: user.email,
       rol: user.rol,
     },
-    JWT_SECRET,
-    { expiresIn: JWT_EXPIRES_IN }
+    getJwtSecret(),
+    { expiresIn: getJwtExpiresIn() }
   );
 }
 
@@ -89,7 +87,6 @@ function login(payload) {
 }
 
 module.exports = {
-  JWT_SECRET,
   publicUser,
   register,
   login,

@@ -1,6 +1,9 @@
 import js from "@eslint/js";
 
 export default [
+  {
+    ignores: ["dist/**", "node_modules/**"],
+  },
   js.configs.recommended,
   {
     files: ["**/*.{js,jsx}"],
@@ -12,6 +15,7 @@ export default [
         document: "readonly",
         localStorage: "readonly",
         console: "readonly",
+        setTimeout: "readonly",
       },
       parserOptions: {
         ecmaFeatures: { jsx: true },

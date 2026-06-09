@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../services/auth.service");
+const { getJwtSecret } = require("../config/auth");
 const AppError = require("../utils/AppError");
 
 function authenticate(req, _res, next) {
@@ -10,7 +10,7 @@ function authenticate(req, _res, next) {
   }
 
   try {
-    req.user = jwt.verify(header.replace("Bearer ", ""));
+    req.user = jwt.verify(header.replace("Bearer ", ""), getJwtSecret());
     return next();
   } catch (_error) {
     return next(new AppError("JWT invalido o vencido", 401));
