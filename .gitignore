@@ -1,0 +1,7 @@
+node_modules/
+.env
+coverage/
+dist/
+backend/src/data/database.json
+backend/test-data/
+*.log
