@@ -49,8 +49,8 @@ export default function TaskDetailPage() {
 
   return (
     <div className="detail-grid">
-      <section className="card">
-        <div className="page-title">
+      <section className="card task-detail-card">
+        <div className="task-detail-header">
           <div>
             <h1>{task.titulo}</h1>
             <p>
@@ -63,9 +63,13 @@ export default function TaskDetailPage() {
           <dt>Descripcion</dt>
           <dd>{task.descripcion}</dd>
           <dt>Prioridad</dt>
-          <dd>{task.prioridad}</dd>
+          <dd>
+            <span className={`badge priority-${task.prioridad}`}>{task.prioridad}</span>
+          </dd>
           <dt>Estado</dt>
-          <dd>{task.estado}</dd>
+          <dd>
+            <span className={`badge state-${task.estado}`}>{task.estado}</span>
+          </dd>
           <dt>Fecha limite</dt>
           <dd>
             {task.fechaLimite} {task.vencida && <strong className="danger-text">(vencida)</strong>}
@@ -75,8 +79,13 @@ export default function TaskDetailPage() {
         </dl>
       </section>
       <TaskActions task={task} onChanged={setTask} />
-      <section className="card wide-card">
-        <h2>Historial</h2>
+      <section className="card wide-card task-history-card">
+        <div className="section-heading">
+          <div>
+            <h2>Historial</h2>
+            <p>Movimientos registrados para esta tarea.</p>
+          </div>
+        </div>
         {history.length === 0 ? (
           <p>No hay movimientos registrados.</p>
         ) : (
