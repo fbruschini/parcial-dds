@@ -30,7 +30,7 @@ export default function TaskActions({ task, onChanged }) {
   }
 
   return (
-    <section className="card">
+    <section className="card task-actions-card">
       <h2>Acciones de estado</h2>
       <ErrorMessage message={error} />
       <SuccessMessage message={success} />

@@ -131,6 +131,65 @@ button.danger {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
+.detail-grid {
+  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+}
+
+.task-detail-card,
+.task-history-card {
+  padding: 1.5rem;
+}
+
+.task-detail-header,
+.section-heading {
+  align-items: flex-start;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+}
+
+.task-detail-header h1,
+.section-heading h2 {
+  margin: 0;
+}
+
+.task-detail-header p,
+.section-heading p {
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0.35rem 0 0;
+}
+
+.task-detail-header a {
+  background: #eff6ff;
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  white-space: nowrap;
+}
+
+.task-actions-card {
+  position: sticky;
+  top: 1rem;
+}
+
+.task-actions-card h2 {
+  margin-top: 0;
+}
+
+.task-actions-card .actions-row {
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.task-actions-card button {
+  min-height: 44px;
+}
+
 .tasks-layout {
   align-items: start;
   display: grid;
@@ -292,8 +351,10 @@ th {
 
 .definition-list {
   display: grid;
-  gap: 0.4rem 1rem;
-  grid-template-columns: max-content 1fr;
+  gap: 0.9rem 1.25rem;
+  grid-template-columns: minmax(120px, 170px) minmax(0, 1fr);
+  line-height: 1.6;
+  margin: 0;
 }
 
 .definition-list dt {
@@ -301,10 +362,24 @@ th {
   font-weight: 800;
 }
 
+.definition-list dd {
+  margin: 0;
+  min-width: 0;
+}
+
 .timeline {
   display: grid;
   gap: 1rem;
-  padding-left: 1.2rem;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline li {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1rem;
 }
 
 .timeline span {
@@ -317,6 +392,9 @@ pre {
   background: #0f172a;
   border-radius: 10px;
   color: #e2e8f0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0.75rem 0 0;
   overflow-x: auto;
   padding: 0.8rem;
 }
@@ -363,5 +441,23 @@ pre {
 
   .tasks-layout {
     grid-template-columns: 1fr;
+  }
+
+  .detail-grid,
+  .definition-list {
+    grid-template-columns: 1fr;
+  }
+
+  .task-actions-card {
+    position: static;
+  }
+
+  .task-actions-card .actions-row {
+    grid-template-columns: 1fr;
+  }
+
+  .task-detail-header,
+  .section-heading {
+    flex-direction: column;
   }
 }
