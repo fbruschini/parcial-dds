@@ -131,6 +131,35 @@ button.danger {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
+.tasks-layout {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
+}
+
+.tasks-content {
+  min-width: 0;
+}
+
+.filters-sidebar .filters-grid {
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 0;
+}
+
+.filters-sidebar select,
+.filters-sidebar input,
+.filters-sidebar button {
+  width: 100%;
+}
+
+.filters-sidebar .actions-row {
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
 .form-stack {
   display: grid;
   gap: 1rem;
@@ -330,5 +359,9 @@ pre {
 
   .container {
     padding: 1rem;
+  }
+
+  .tasks-layout {
+    grid-template-columns: 1fr;
   }
 }

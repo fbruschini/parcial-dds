@@ -83,40 +83,46 @@ export default function TasksListPage() {
           <p>Filtros, paginacion y ordenamiento resueltos desde la API.</p>
         </div>
       </div>
-      <TaskFilters
-        filters={filters}
-        projects={projects}
-        users={users}
-        onChange={setFilters}
-        onSubmit={handleSubmit}
-        onReset={resetFilters}
-      />
-      <ErrorMessage message={error} />
-      {loading ? <LoadingMessage /> : <TaskTable tasks={tasksResponse.data} />}
-      {tasksResponse.pagination && (
-        <div className="pagination">
-          <button
-            type="button"
-            className="secondary"
-            disabled={tasksResponse.pagination.page <= 1}
-            onClick={() => changePage(tasksResponse.pagination.page - 1)}
-          >
-            Anterior
-          </button>
-          <span>
-            Pagina {tasksResponse.pagination.page} de {tasksResponse.pagination.totalPages} ·{" "}
-            {tasksResponse.pagination.total} tareas
-          </span>
-          <button
-            type="button"
-            className="secondary"
-            disabled={tasksResponse.pagination.page >= tasksResponse.pagination.totalPages}
-            onClick={() => changePage(tasksResponse.pagination.page + 1)}
-          >
-            Siguiente
-          </button>
-        </div>
-      )}
+      <div className="tasks-layout">
+        <aside className="filters-sidebar">
+          <TaskFilters
+            filters={filters}
+            projects={projects}
+            users={users}
+            onChange={setFilters}
+            onSubmit={handleSubmit}
+            onReset={resetFilters}
+          />
+        </aside>
+        <section className="tasks-content">
+          <ErrorMessage message={error} />
+          {loading ? <LoadingMessage /> : <TaskTable tasks={tasksResponse.data} />}
+          {tasksResponse.pagination && (
+            <div className="pagination">
+              <button
+                type="button"
+                className="secondary"
+                disabled={tasksResponse.pagination.page <= 1}
+                onClick={() => changePage(tasksResponse.pagination.page - 1)}
+              >
+                Anterior
+              </button>
+              <span>
+                Pagina {tasksResponse.pagination.page} de {tasksResponse.pagination.totalPages} ·{" "}
+                {tasksResponse.pagination.total} tareas
+              </span>
+              <button
+                type="button"
+                className="secondary"
+                disabled={tasksResponse.pagination.page >= tasksResponse.pagination.totalPages}
+                onClick={() => changePage(tasksResponse.pagination.page + 1)}
+              >
+                Siguiente
+              </button>
+            </div>
+          )}
+        </section>
+      </div>
     </>
   );
 }
