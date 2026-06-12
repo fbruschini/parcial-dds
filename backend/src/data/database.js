@@ -17,6 +17,38 @@ function ensureDatabase() {
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, JSON.stringify(createSeedData(), null, 2));
   }
+
+  normalizePersistedDates(filePath);
+}
+
+function parseDeadlineEnd(fechaLimite) {
+  return new Date(`${fechaLimite}T23:59:59`);
+}
+
+function normalizePersistedDates(filePath) {
+  const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  let changed = false;
+
+  data.tareas = data.tareas.map((task) => {
+    if (!task.createdAt || !task.fechaLimite) {
+      return task;
+    }
+
+    const createdAt = new Date(task.createdAt);
+    const deadlineEnd = parseDeadlineEnd(task.fechaLimite);
+
+    if (Number.isNaN(createdAt.getTime()) || Number.isNaN(deadlineEnd.getTime()) || createdAt <= deadlineEnd) {
+      return task;
+    }
+
+    const normalizedCreatedAt = new Date(`${task.fechaLimite}T09:00:00`).toISOString();
+    changed = true;
+    return { ...task, createdAt: normalizedCreatedAt };
+  });
+
+  if (changed) {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+  }
 }
 
 function readData() {

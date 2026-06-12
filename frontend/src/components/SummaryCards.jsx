@@ -1,3 +1,5 @@
+import { formatDate } from "../utils/date";
+
 export default function SummaryCards({ summary }) {
   return (
     <div className="summary-grid">
@@ -18,7 +20,7 @@ export default function SummaryCards({ summary }) {
         <ul>
           {summary.tareasVencidas.slice(0, 5).map((task) => (
             <li key={task.id}>
-              {task.titulo} · {task.fechaLimite}
+              {task.titulo} · {formatDate(task.fechaLimite)}
             </li>
           ))}
         </ul>

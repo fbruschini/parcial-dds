@@ -7,7 +7,7 @@ process.env.JWT_SECRET = "test-secret";
 
 const request = require("supertest");
 const app = require("../src/app");
-const { resetData } = require("../src/data/database");
+const { readData, resetData } = require("../src/data/database");
 const { PASSWORD } = require("../src/data/seedData");
 
 async function login(email = "admin@dds.com", password = PASSWORD) {
@@ -35,6 +35,17 @@ describe("API seguimiento de tareas", () => {
     expect(response.body.token).toEqual(expect.any(String));
     expect(response.body.user).toMatchObject({ email: "admin@dds.com", rol: "admin" });
     expect(response.body.user.passwordHash).toBeUndefined();
+  });
+
+  test("la semilla no tiene tareas creadas despues del vencimiento", () => {
+    const data = readData();
+
+    data.tareas.forEach((task) => {
+      const createdAt = new Date(task.createdAt);
+      const deadline = new Date(`${task.fechaLimite}T23:59:59`);
+
+      expect(createdAt.getTime()).toBeLessThanOrEqual(deadline.getTime());
+    });
   });
 
   test("login invalido devuelve 401 y error JSON", async () => {
@@ -234,6 +245,25 @@ describe("API seguimiento de tareas", () => {
 
     expect(response.status).toBe(400);
     expect(response.body.error).toBe("No se pueden crear tareas en un proyecto pausado");
+  });
+
+  test("rechaza fecha limite anterior a la creacion", async () => {
+    const token = await login();
+    const response = await request(app)
+      .post("/api/tareas")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        proyectoId: "proy-api",
+        titulo: "Fecha incoherente",
+        descripcion: "Debe fallar por fecha limite pasada",
+        responsableId: "usr-sofia",
+        prioridad: "media",
+        estado: "pendiente",
+        fechaLimite: "2026-06-01",
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe("La fecha de creacion no puede ser mayor que la fecha limite");
   });
 
   test("rechaza transicion de estado no permitida", async () => {

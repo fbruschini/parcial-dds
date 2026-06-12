@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { formatDate } from "../utils/date";
 
 export default function TaskTable({ tasks }) {
   if (tasks.length === 0) {
@@ -31,7 +32,7 @@ export default function TaskTable({ tasks }) {
               <td>
                 <span className={`badge state-${task.estado}`}>{task.estado}</span>
               </td>
-              <td>{task.fechaLimite}</td>
+              <td>{formatDate(task.fechaLimite)}</td>
               <td>
                 <Link to={`/tareas/${task.id}`}>Ver detalle</Link>
               </td>

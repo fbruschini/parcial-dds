@@ -49,8 +49,32 @@ function createUsers() {
   ];
 }
 
+function addDays(baseDate, offset) {
+  const date = new Date(baseDate);
+  date.setHours(0, 0, 0, 0);
+  date.setDate(date.getDate() + offset);
+  return date;
+}
+
+function formatDateOnly(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function dateOnlyFromToday(offset, today) {
+  return formatDateOnly(addDays(today, offset));
+}
+
+function dateTimeFromToday(offset, today, hour = 9) {
+  const date = addDays(today, offset);
+  date.setHours(hour, 0, 0, 0);
+  return date.toISOString();
+}
+
 function createSeedData() {
-  const now = new Date().toISOString();
+  const today = new Date();
 
   return {
     usuarios: createUsers(),
@@ -97,8 +121,8 @@ function createSeedData() {
         responsableId: "usr-mica",
         prioridad: "alta",
         estado: "pendiente",
-        fechaLimite: "2026-06-21",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(9, today),
+        createdAt: dateTimeFromToday(-4, today),
       },
       {
         id: "tar-1002",
@@ -108,8 +132,8 @@ function createSeedData() {
         responsableId: "usr-lider",
         prioridad: "critica",
         estado: "en_progreso",
-        fechaLimite: "2026-06-18",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(6, today),
+        createdAt: dateTimeFromToday(-5, today),
       },
       {
         id: "tar-1003",
@@ -119,8 +143,8 @@ function createSeedData() {
         responsableId: "usr-juan",
         prioridad: "media",
         estado: "bloqueada",
-        fechaLimite: "2026-06-25",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(13, today),
+        createdAt: dateTimeFromToday(-3, today),
       },
       {
         id: "tar-1004",
@@ -130,8 +154,8 @@ function createSeedData() {
         responsableId: "usr-admin",
         prioridad: "baja",
         estado: "finalizada",
-        fechaLimite: "2026-06-10",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(-2, today),
+        createdAt: dateTimeFromToday(-10, today),
       },
       {
         id: "tar-1005",
@@ -141,8 +165,8 @@ function createSeedData() {
         responsableId: "usr-mica",
         prioridad: "alta",
         estado: "en_progreso",
-        fechaLimite: "2026-06-17",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(5, today),
+        createdAt: dateTimeFromToday(-6, today),
       },
       {
         id: "tar-1006",
@@ -152,8 +176,8 @@ function createSeedData() {
         responsableId: "usr-sofia",
         prioridad: "media",
         estado: "pendiente",
-        fechaLimite: "2026-06-30",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(18, today),
+        createdAt: dateTimeFromToday(-1, today),
       },
       {
         id: "tar-1007",
@@ -163,8 +187,8 @@ function createSeedData() {
         responsableId: "usr-lider",
         prioridad: "critica",
         estado: "finalizada",
-        fechaLimite: "2026-06-12",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(0, today),
+        createdAt: dateTimeFromToday(-8, today),
       },
       {
         id: "tar-1008",
@@ -174,8 +198,8 @@ function createSeedData() {
         responsableId: "usr-mica",
         prioridad: "alta",
         estado: "cancelada",
-        fechaLimite: "2026-06-15",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(3, today),
+        createdAt: dateTimeFromToday(-7, today),
       },
       {
         id: "tar-1009",
@@ -185,8 +209,8 @@ function createSeedData() {
         responsableId: "usr-juan",
         prioridad: "media",
         estado: "pendiente",
-        fechaLimite: "2026-06-19",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(7, today),
+        createdAt: dateTimeFromToday(-4, today),
       },
       {
         id: "tar-1010",
@@ -196,8 +220,8 @@ function createSeedData() {
         responsableId: "usr-sofia",
         prioridad: "baja",
         estado: "bloqueada",
-        fechaLimite: "2026-06-16",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(-1, today),
+        createdAt: dateTimeFromToday(-9, today),
       },
       {
         id: "tar-1011",
@@ -207,8 +231,8 @@ function createSeedData() {
         responsableId: "usr-admin",
         prioridad: "alta",
         estado: "en_progreso",
-        fechaLimite: "2026-06-14",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(2, today),
+        createdAt: dateTimeFromToday(-5, today),
       },
       {
         id: "tar-1012",
@@ -218,8 +242,8 @@ function createSeedData() {
         responsableId: "usr-lider",
         prioridad: "media",
         estado: "finalizada",
-        fechaLimite: "2026-06-01",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(-11, today),
+        createdAt: dateTimeFromToday(-20, today),
       },
       {
         id: "tar-1013",
@@ -229,8 +253,8 @@ function createSeedData() {
         responsableId: "usr-mica",
         prioridad: "critica",
         estado: "pendiente",
-        fechaLimite: "2026-06-08",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(-4, today),
+        createdAt: dateTimeFromToday(-12, today),
       },
       {
         id: "tar-1014",
@@ -240,8 +264,8 @@ function createSeedData() {
         responsableId: "usr-sofia",
         prioridad: "baja",
         estado: "finalizada",
-        fechaLimite: "2026-06-09",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(-3, today),
+        createdAt: dateTimeFromToday(-9, today),
       },
       {
         id: "tar-1015",
@@ -251,8 +275,8 @@ function createSeedData() {
         responsableId: "usr-juan",
         prioridad: "critica",
         estado: "en_progreso",
-        fechaLimite: "2026-06-07",
-        createdAt: now,
+        fechaLimite: dateOnlyFromToday(-5, today),
+        createdAt: dateTimeFromToday(-13, today),
       },
     ],
     historial_tareas: [
@@ -261,7 +285,7 @@ function createSeedData() {
         tareaId: "tar-1001",
         usuarioId: "usr-admin",
         accion: "creacion",
-        fechaHora: now,
+        fechaHora: dateTimeFromToday(-4, today, 10),
         valorAnterior: null,
         valorNuevo: { estado: "pendiente", responsableId: "usr-mica" },
       },
@@ -270,7 +294,7 @@ function createSeedData() {
         tareaId: "tar-1002",
         usuarioId: "usr-lider",
         accion: "cambio_estado",
-        fechaHora: now,
+        fechaHora: dateTimeFromToday(-4, today, 14),
         valorAnterior: { estado: "pendiente" },
         valorNuevo: { estado: "en_progreso" },
       },
@@ -279,7 +303,7 @@ function createSeedData() {
         tareaId: "tar-1003",
         usuarioId: "usr-admin",
         accion: "cambio_estado",
-        fechaHora: now,
+        fechaHora: dateTimeFromToday(-2, today, 11),
         valorAnterior: { estado: "en_progreso" },
         valorNuevo: { estado: "bloqueada" },
       },
