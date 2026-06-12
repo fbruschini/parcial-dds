@@ -54,6 +54,19 @@ textarea:focus {
   outline: none;
 }
 
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: var(--color-coral);
+}
+
+.field-error {
+  color: #8d2a22;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 button {
   background: var(--color-aqua);
   border-color: var(--color-aqua);
