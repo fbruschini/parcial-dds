@@ -5,6 +5,7 @@ import { getErrorMessage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import TaskActions from "../components/TaskActions";
 import { ErrorMessage, LoadingMessage } from "../components/StatusMessage";
+import { formatDate } from "../utils/date";
 
 export default function TaskDetailPage() {
   const { id } = useParams();
@@ -72,10 +73,10 @@ export default function TaskDetailPage() {
           </dd>
           <dt>Fecha limite</dt>
           <dd>
-            {task.fechaLimite} {task.vencida && <strong className="danger-text">(vencida)</strong>}
+            {formatDate(task.fechaLimite)} {task.vencida && <strong className="danger-text">(vencida)</strong>}
           </dd>
           <dt>Creada</dt>
-          <dd>{new Date(task.createdAt).toLocaleString()}</dd>
+          <dd>{formatDate(task.createdAt)}</dd>
         </dl>
       </section>
       <TaskActions task={task} onChanged={setTask} />
@@ -93,7 +94,7 @@ export default function TaskDetailPage() {
             {history.map((entry) => (
               <li key={entry.id}>
                 <strong>{entry.accion}</strong>
-                <span>{new Date(entry.fechaHora).toLocaleString()}</span>
+                <span>{formatDate(entry.fechaHora)}</span>
                 <pre>{JSON.stringify({ anterior: entry.valorAnterior, nuevo: entry.valorNuevo }, null, 2)}</pre>
               </li>
             ))}

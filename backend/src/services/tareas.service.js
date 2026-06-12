@@ -48,6 +48,29 @@ function isOverdue(task, now = new Date()) {
   return dueDate < now && !["finalizada", "cancelada"].includes(task.estado);
 }
 
+function parseDeadlineEnd(fechaLimite) {
+  const deadline = new Date(`${fechaLimite}T23:59:59`);
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fechaLimite) || Number.isNaN(deadline.getTime())) {
+    throw new AppError("La fecha limite debe tener formato valido", 400);
+  }
+
+  return deadline;
+}
+
+function validateDeadlineAfterCreation(fechaLimite, createdAt) {
+  const deadline = parseDeadlineEnd(fechaLimite);
+  const created = new Date(createdAt);
+
+  if (Number.isNaN(created.getTime())) {
+    throw new AppError("La fecha de creacion no es valida", 400);
+  }
+
+  if (created > deadline) {
+    throw new AppError("La fecha de creacion no puede ser mayor que la fecha limite", 400);
+  }
+}
+
 function findTask(data, id) {
   const task = data.tareas.find((candidate) => candidate.id === id);
 
@@ -218,6 +241,9 @@ function createTask(payload, user) {
   validateProjectAllowsNewTasks(project);
   validateResponsible(project, responsableId);
 
+  const createdAt = new Date().toISOString();
+  validateDeadlineAfterCreation(fechaLimite, createdAt);
+
   const task = {
     id: `tar-${randomUUID()}`,
     proyectoId,
@@ -227,7 +253,7 @@ function createTask(payload, user) {
     prioridad,
     estado,
     fechaLimite,
-    createdAt: new Date().toISOString(),
+    createdAt,
   };
 
   data.tareas.push(task);
@@ -286,6 +312,10 @@ function updateTask(id, payload, user) {
 
   if (allowedPayload.responsableId) {
     validateResponsible(project, allowedPayload.responsableId);
+  }
+
+  if (Object.prototype.hasOwnProperty.call(allowedPayload, "fechaLimite")) {
+    validateDeadlineAfterCreation(allowedPayload.fechaLimite, task.createdAt);
   }
 
   Object.assign(task, allowedPayload);

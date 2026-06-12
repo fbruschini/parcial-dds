@@ -139,6 +139,8 @@ Authorization: Bearer <token>
   - cualquier tarea no finalizada/cancelada puede ir a `cancelada`
 - No se editan tareas `finalizada` o `cancelada`.
 - Una tarea vencida es la que tiene `fechaLimite` anterior a la fecha actual y estado distinto de `finalizada` o `cancelada`.
+- La fecha de creacion no puede ser posterior a la fecha limite. El backend rechaza altas o ediciones que rompan esa regla.
+- En la interfaz todas las fechas se muestran con el mismo formato `dd-mm-aa`.
 - Cada creacion, edicion, reasignacion, cambio de prioridad, cambio de estado o cancelacion agrega historial.
 
 ## Roles y permisos
