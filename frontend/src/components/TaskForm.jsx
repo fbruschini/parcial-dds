@@ -62,8 +62,8 @@ export default function TaskForm({ task, projects, users, onSubmit, submitLabel 
   }
 
   return (
-    <form className="card form-grid" onSubmit={handleSubmit}>
-      <label>
+    <form className="card form-grid task-form" onSubmit={handleSubmit}>
+      <label className="span-2">
         Proyecto
         <select name="proyectoId" value={values.proyectoId} onChange={updateField} disabled={isEditing} required>
           <option value="">Seleccionar proyecto</option>
@@ -74,7 +74,7 @@ export default function TaskForm({ task, projects, users, onSubmit, submitLabel 
           ))}
         </select>
       </label>
-      <label>
+      <label className="span-2">
         Responsable
         <select name="responsableId" value={values.responsableId} onChange={updateField} disabled={!isAdminLike} required>
           <option value="">Seleccionar responsable</option>
@@ -85,11 +85,11 @@ export default function TaskForm({ task, projects, users, onSubmit, submitLabel 
           ))}
         </select>
       </label>
-      <label>
+      <label className="span-2">
         Titulo
         <input name="titulo" value={values.titulo} onChange={updateField} disabled={!isAdminLike} required />
       </label>
-      <label>
+      <label className="span-2">
         Fecha limite
         <input
           type="date"
